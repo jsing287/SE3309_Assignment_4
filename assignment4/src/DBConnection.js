@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 
 // A function that returns a connection link to the GoogleCloud database.
