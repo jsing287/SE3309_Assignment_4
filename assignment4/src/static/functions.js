@@ -19,11 +19,23 @@ function login()
 
 function displayCategories()
 {
+    let display = document.getElementById("display")
     if(this.readyState==4 && this.status == 200)
     {
-        document.open();
-        document.write(this.responseText);
-        document.close();
+        if(this.responseText=="Incorrect Credentials Please Try Again!")
+        {
+
+            display.innerHTML=this.responseText
+
+        }
+        else
+        {
+            document.open();
+            document.write(this.responseText);
+            document.close();
+
+        }
+     
         
         
     }

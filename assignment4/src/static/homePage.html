@@ -4,18 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type = "text/javascript" src="homeFunctions.js" ></script>
+  
     <title>Document</title>
+    
 </head>
-<body>
-
-    <div style= "display: flex; flex-direction: row; justify-content: center; ">
+<body style="display: flex; flex-direction: row; justify-content: center; ">
 
         <div style="display: flex; flex-direction: column; justify-content: center;">
-            <div id="greeting"></div>
+            <div id="greeting" style="align-self: center;"></div>
+
+            <div style = "display: flex; flex-direction: row; justify-content: center;">
+            <button style="margin-inline: 10px;" onclick="hi()">Store Sales</button>
+                  
+            <button style="margin-inline: 10px;" onclick="showClosest()">Find Closest Store</button>
+        
+            <button style="margin-inline: 10px;" onclick="addShoe()">Add Shoe</button>
+         
+
+            <button style="margin-inline: 10px;" onclick="hi()">My Sales</button>
+    
+            <button style="margin-inline: 10px;" onclick="order()">Current Orders</button>
+             </div>
+
+             <div id="response"  style="align-self: center;"></div>
+
+             <div id="confirm"  style="align-self: center; background-color: rgb(197, 240, 188); padding: 30px; visibility: hidden; border-radius: 3%;" ></div>
+
           
         </div>
+
+       
+
+
+          
+       
   
+
     
 </body>
+<script type = "text/javascript" src="homeFunctions.js" ></script>
 </html>
