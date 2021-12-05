@@ -86,7 +86,6 @@ app.get("/store", (req, res)=>{
             console.log("Connected!")
         }
     })
-
     conn.query("select * from Store", (err, rows, fields)=>{
 
         let content = '';
