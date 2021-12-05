@@ -157,6 +157,15 @@ app.get("/addShoe", (req, res)=>{
 
             if(err)
                 console.log(err)
+
+            
+        if(!Array.isArray(results) || !results)
+        {
+            res.send("Please Input a Valid Shoe Item Attributes!")
+
+        }
+        else
+        {
             
                 let getQuery =    `SELECT * FROM Shoes WHERE shoeID = ${newItemNum};
                 SELECT *  FROM Stock WHERE itemID = ${newItemNum};`
@@ -174,16 +183,73 @@ app.get("/addShoe", (req, res)=>{
 
                         content= "<div style='margin-top:10px; margin-bottom: 10px'>Success! Here is your Data Entry.</div>"
                         content+=`<div style='margin-bottom: 10px'>Shoe Data:</div>`
-                        content+=`<div style='margin-bottom: 10px'>Brand: ${shoeData.brand}   |   Price:  $${shoeData.price}   |   Size: ${shoeData.size}   Shoe Type:${shoeData.shoeType}  |   Color: ${shoeData.color}  |   ShoeID: ${shoeData.shoeID}</div>`
-                        content+=`<div style='margin-bottom: 10px'>Stock Data:</div>`
-                        content+=`<div style='margin-bottom: 10px'>Item ID: ${stockData.itemID}   |   Store Street: ${stockData.storeStreet}   |   Store City: ${stockData.storeCity}   |   Store State: ${stockData.storeState}  |  Stock Count: ${stockData.stockCount}</div>`
+                     
+                       
+                        content+=`<table cellpadding="5px" cellspacing="5px">
+                        <tr>
+                        <th>Brand</th>
+                        <th>Price</th>
+                        <th>Size</th>
+                        <th>Shoe Type</th>
+                        <th>Color</th>
+                        <th>Shoe ID</th>
+                        </tr>`
+                 
+                        
+                       
+                    
+                         content+=`
+                                     <tr>
+                                     <td>${shoeData.brand}</td>
+                                     <td>$${shoeData.price}</td>
+                                     <td>${shoeData.size}
+                                     <td>${shoeData.shoeType}</td>
+                                     <td>${shoeData.color}</td>
+                                     <td>${shoeData.shoeID}</td>
+                                     </tr>
+                                     </table>
+                         
+                         
+                         
+                         `
 
+                         content+=`<div style='margin-bottom: 10px; margin-top:10px'>Stock Data:</div>`
+
+                         content+=`<table cellpadding="5px" cellspacing="5px" style="margin-top:10px">
+                         <tr>
+                         <th>Item  ID</th>
+                         <th>Store Street</th>
+                         <th>Store City</th>
+                         <th>Store State</th>
+                         <th>Stock Count</th>
+                         </tr>`
+                  
+                         
+                        
+                     
+                          content+=`
+                                      <tr>
+                                      <td>${stockData.itemID}</td>
+                                      <td>${stockData.storeStreet}</td>
+                                      <td>${stockData.storeCity}
+                                      <td>${stockData.storeState}</td>
+                                      <td>${stockData.stockCount}</td>
+                                
+                                      </tr>
+                                      </table>
+                          
+                          
+                          
+                          `
+                 
                         
                        
 
                         res.send(content)
 
                 });
+
+            }
 
                 conn.end()
                
@@ -240,51 +306,63 @@ app.get('/distance', (req, res)=>{
 
         if(err)
             console.log(err)
-        
-    
 
-       let content=``;
+        
+
+        if(!Array.isArray(rows) || !rows.length)
+        {
+            res.send("Please Input a Valid Email Address and Item ID!")
+
+        }
+        else
+        {
+            let content=``;
 
       
 
-       content= `<div  style='margin-bottom: 10px'>Closest Stores to Customer: ${rows[0].email} that have ItemID: ${info.itemID} </div>`
-       content+= "<div  style='margin-bottom: 10px'> Store Information: </div>"
-
-       content+=`<table cellpadding="5px" cellspacing="5px">
-       <tr>
-       <th>Street</th>
-       <th>City</th>
-       <th>State</th>
-       <th>Postal Code</th>
-       <th>Distance</th>
-       </tr>`
-
-       for(let i = 0; i<rows.length;i++)
-       {
+            content= `<div  style='margin-bottom: 10px'>Closest Stores to Customer: ${rows[0].email} that have ItemID: ${info.itemID} </div>`
+            content+= "<div  style='margin-bottom: 10px'> Store Information: </div>"
+     
+            content+=`<table cellpadding="5px" cellspacing="5px">
+            <tr>
+            <th>Street</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Postal Code</th>
+            <th>Distance</th>
+            </tr>`
+     
+            for(let i = 0; i<rows.length;i++)
+            {
+                
            
-      
-   
-        content+=`
-                    <tr>
-                    <td>${rows[i].street}</td>
-                    <td>${rows[i].city}</td>
-                    <td>${rows[i].state}
-                    <td>${rows[i].postalCode}</td>
-                    <td>${rows[i].distance}</td>
-                    </tr>
         
-        
-        
-        `
+             content+=`
+                         <tr>
+                         <td>${rows[i].street}</td>
+                         <td>${rows[i].city}</td>
+                         <td>${rows[i].state}
+                         <td>${rows[i].postalCode}</td>
+                         <td>${rows[i].distance}</td>
+                         </tr>
+             
+             
+             
+             `
+     
+            }
+         
+            
+     
+            content+="</table>"
+     
+     
+             res.send(content);
 
-       }
+        }
     
-       
 
-       content+="</table>"
-
-
-        res.send(content);
+     
 
     });
 
