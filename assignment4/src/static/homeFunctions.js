@@ -15,6 +15,8 @@ function getEmployee()
 
 function order()
 { 
+    let response  = document.getElementById("response");
+    response.style.display= "none"
     let xReq = new XMLHttpRequest(); // creating a new XML request.
     xReq.onreadystatechange = displayResponse; 
 
@@ -28,6 +30,7 @@ function order()
 function addShoe()
 {
     let response = document.getElementById("response");
+    response.style.display = "block"
 
     let display  = document.getElementById("confirm");
     display.style.visibility = "hidden"
@@ -121,7 +124,9 @@ function displayResponse()
 
 function showClosest()
 {
+    
     let response = document.getElementById("response");
+    response.style.display = "block"
 
     let display  = document.getElementById("confirm");
     display.style.visibility = "hidden"
@@ -204,6 +209,45 @@ function displayClosest()
         
         
     }
+}
+
+function metrics()
+{
+    let response  = document.getElementById("response");
+    response.style.display= "none"
+
+    let display  = document.getElementById("confirm");
+    display.style.visibility = "hidden"
+      
+
+
+    let xReq = new XMLHttpRequest(); // creating a new XML request.
+    xReq.onreadystatechange = displayResponse; 
+
+  
+    xReq.open('GET', `/employeeStats`, true)  
+
+    xReq.send(); 
+
+}
+
+function  items()
+{
+    let response  = document.getElementById("response");
+    response.style.display= "none"
+    let display  = document.getElementById("confirm");
+    display.style.visibility = "hidden"
+      
+
+
+    let xReq = new XMLHttpRequest(); // creating a new XML request.
+    xReq.onreadystatechange = displayResponse; 
+
+  
+    xReq.open('GET', `/itemsSold`, true)  
+
+    xReq.send(); 
+
 }
 
 

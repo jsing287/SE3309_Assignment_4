@@ -396,3 +396,161 @@ app.get('/order', (req, res)=>{
 
 
 })
+
+app.get('/employeeStats', (req, res)=>{
+
+
+
+
+    let query = `SELECT employeeEmail, SUM(S.totalSaleAmount)/salary as marginBroughtIn
+    From sales S
+        JOIN employee
+        ON employeeEmail = employee.email AND employee.storeStreet = '${employee.storeStreet}' AND employee.storeCity = '${employee.storeCity}' AND employee.storeState ='${employee.storeState}'
+    Group By S.employeeEmail
+    Order by marginBroughtIn desc`
+
+    let  conn = newConnection();
+
+    conn.connect((err)=>
+    {
+        if(err)
+        {
+            console.log(err)
+        }
+        else
+        {
+            console.log("Connected!")
+        }
+    })
+
+    conn.query(query, (err, rows, fields)=>{
+
+
+        if(err)
+            console.log(err)
+        
+    
+
+       let content=``;
+
+      
+
+       content= `<div  style='margin-bottom: 10px'>Employee Efficiency Metrics: Sales to Salary Ratio </div>`
+
+       content+=`<table cellpadding="5px" cellspacing="5px">
+       <tr>
+       <th>Employee Email</th>
+       <th>Margin Brought In</th>
+       
+       </tr>`
+
+       for(let i = 0; i<rows.length;i++)
+       {
+           
+      
+   
+        content+=`
+                    <tr>
+                    <td>${rows[i].employeeEmail}</td>
+                    <td>${rows[i].marginBroughtIn}</td>
+                    </tr>
+        
+        
+        
+        `
+
+       }
+    
+       
+
+       content+="</table>"
+
+
+        res.send(content);
+
+    });
+
+    
+   
+
+    conn.end()
+})
+
+
+app.get("/itemsSold", (req, res)=>{
+
+
+    let query = `SELECT Brand, count(brand) as sold
+    From sales S
+        JOIN shoes
+        ON S.itemID = shoeID
+    Group by brand
+    Order by sold desc`
+
+    let  conn = newConnection();
+
+    conn.connect((err)=>
+    {
+        if(err)
+        {
+            console.log(err)
+        }
+        else
+        {
+            console.log("Connected!")
+        }
+    })
+
+    conn.query(query, (err, rows, fields)=>{
+
+
+        if(err)
+            console.log(err)
+        
+    
+
+       let content=``;
+
+      
+
+       content= `<div  style='margin-bottom: 10px'>Highest Selling Shoe Brand: </div>`
+
+       content+=`<table cellpadding="5px" cellspacing="5px">
+       <tr>
+       <th>Brand</th>
+       <th>Amount Sold</th>
+       
+       </tr>`
+
+       console.log(rows[0])
+
+       for(let i = 0; i<rows.length;i++)
+       {
+           
+      
+   
+        content+=`
+                    <tr>
+                    <td>${rows[i].Brand}</td>
+                    <td>${rows[i].sold}</td>
+                    </tr>
+        `
+
+       }
+    
+       
+
+       content+="</table>"
+
+
+        res.send(content);
+
+    });
+
+    
+   
+
+    conn.end()
+
+    
+})
